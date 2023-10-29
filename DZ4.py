@@ -26,7 +26,12 @@ select_data_zp = split_data[split_data['Зарплата'] >= av_sal]
 # Фильтруем по возрасту
 select_data_age = select_data_zp[select_data_zp['Возраст'] >= (25 + 54 % 10)]
 
-#Сортируем по порядковому номеру
+# Сортируем по порядковому номеру
 sort_data = select_data_age.sort_values(by=['Порядковый номер'])
+
+# Преобразуем таблицу
+sort_data['ФИО'] = sort_data['Имя'] + " " + sort_data['Фамилия']
+sort_data.drop('Имя', axis=1, inplace=True)
+sort_data.drop('Фамилия', axis=1, inplace=True)
 
 sort_data.to_csv('output4.csv')
